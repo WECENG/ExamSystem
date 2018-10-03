@@ -1,2 +1,0 @@
-# example-my-shop
-
