@@ -26,7 +26,7 @@ public class ExamController {
     List<ExamPool> initExam(@RequestBody String mes){
         if(mes.equals("initExam")){
             List<ExamPool> list=new ArrayList<>();
-            for(int i=1;i<10;i++){
+            for(int i=1;i<=ExamType.EXAM_SIZE.getValue();i++){
             list.add(service.getExamPool(SubjectType.SUBJECT_ONE.getValue(),i));
             }
             return list;
@@ -34,7 +34,7 @@ public class ExamController {
 
         if (mes.equals("updateExam")){
             List<ExamPool> list=new ArrayList<>();
-            for(int i=1;i<10;i++){
+            for(int i=1;i<=ExamType.EXAM_SIZE.getValue();i++){
                 list.add(service.getExamPool(SubjectType.SUBJECT_FOUR.getValue(),i));
             }
             return list;
@@ -47,14 +47,14 @@ public class ExamController {
         int type=Integer.parseInt(request.getParameter("type"));
         int curPage=Integer.parseInt(request.getParameter("curPage"));
         ExamPool examPool =service.getExamPool(type,curPage);
-//        int questionCount=service.countQuestion(examPool);
         int rightCount=0;
-//        System.out.println("题数"+questionCount);
+        List<String> answers=new ArrayList<>();
         for(int i = 0; i<ExamType.QUESTION_SIZE.getValue(); i++){
             Question question=service.getQuestion(examPool,i);
             String answer=service.getAnswer(question);
             //前端以问题的序号作为参数将答案传到后台
             String choice=request.getParameter(String.valueOf(i));
+            answers.add(choice);
             if(answer!=null&&choice!=null&&answer.equals(choice)){
                 rightCount++;
             }
@@ -63,6 +63,7 @@ public class ExamController {
         model.addAttribute("score",score);
         model.addAttribute("type",type);
         model.addAttribute("curPage",curPage);
+        model.addAttribute("answer",answers);
         return "score";
     }
 

@@ -6,8 +6,8 @@ package cn.gdou.utils;
  * @Description:    试题属性常量
  */
 public enum  ExamType {
-    EXAM_SIZE(10),  //科目一对应的序号
-    QUESTION_SIZE(20);  //科目四对应的序号
+    EXAM_SIZE(10),  //试卷数量
+    QUESTION_SIZE(20);  //题目数量
 
     private final int value;
 

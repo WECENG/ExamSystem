@@ -95,10 +95,20 @@ border: 5px solid #DAA520;
         <label>准考证号</label><input type="text" name="admissionNum" value="${cookie.admissionNum.value}"/><br>
         <label>用户名</label><input type="text" name="stuName" value="${cookie.username.value}"/><br>
         <label>密码</label><br><input type="password" name="password" value="${cookie.password.value}"/><br>
+        <div class="user-form-item">
+        <input id="vcode" name="vcode" type="text" max="4" placeholder="验证码">
+            <img class="qrcode" src="${pageContext.request.contextPath}/vcode" id="prove" title="换一张" alt="加载中" onclick="changeCode(this)" style="cursor:pointer;">
+        </div>
         <input type="submit" name="submit" value="登陆"/><br>
         <a href="${pageContext.request.contextPath}/examPool/password">密码找回</a>
         <span colspan="2"><input type="checkbox" name="isUseCheckBox" checked="checked" ><br>保存用户登录信息持续10天</span>
     </form>
 </div>
 </body>
+<%--更换验证码--%>
+<script type="text/javascript">
+    function changeCode(obj){
+        obj.src = "vcode.do?id=" + Math.random();
+    }
+</script>
 </html>

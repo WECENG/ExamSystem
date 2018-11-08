@@ -14,7 +14,6 @@ public class Student implements Serializable {
     private String admissionNum;
     @Size(min=2,max=30,message=" {stuName.size} ")
     private String stuName;
-    @Size(min=8,max=20,message = "{password.size}")
     private String password;
     private String mail;
     @Size(min=11,max = 11,message = "{phone.size}")

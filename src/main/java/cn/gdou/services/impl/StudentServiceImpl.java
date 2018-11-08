@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 
 @Service
 @Transactional(transactionManager = "jpaTransaction")
@@ -41,8 +42,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @CacheEvict(key = "#student.admissionNum")
     public int update(Student student) {
+        /*密码加密*/
+        String md5Password=DigestUtils.md5DigestAsHex(student.getPassword().getBytes());
         return repository.update(student.getAdmissionNum(),student.getStuName(),
-                student.getPassword(),student.getMail(),student.getPhone(),
+                md5Password,student.getMail(),student.getPhone(),
                 student.getIdentifyNum(),student.getId());
     }
 
@@ -56,6 +59,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @CachePut(key = "#result.admissionNum" ,unless ="#result==null")
     public Student save(Student student) {
+        /*密码加密*/
+        String md5Password=DigestUtils.md5DigestAsHex(student.getPassword().getBytes());
+        student.setPassword(md5Password);
         return repository.save(student);
     }
 }

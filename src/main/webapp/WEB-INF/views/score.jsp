@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Score</title>
@@ -69,7 +70,7 @@
         }
 </script>
 
-<body onload="load()" background="/images/1.jpg" style="background-size: 200%">
+<body onload="load()">
 <!-- 导航栏 -->
 <div id="nav">
     <ul>
@@ -91,6 +92,25 @@
     </ul>
 </div >
     <label style="font-size: 3em;color: skyblue;">得分:${score}</label><br>
+    <table class="table table-bordered">
+        <caption>提交答案</caption>
+        <thead>
+        <tr>
+            <th>题号</th>
+            <c:forEach var="i" begin="1" end="20">
+                <th>${i}</th>
+            </c:forEach>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">答案</th>
+            <c:forEach var="i" items="${answer}">
+                <td>${i}</td>
+            </c:forEach>
+        </tr>
+        </tbody>
+    </table>
     <div id="explainExam">
     </div>
 </body>

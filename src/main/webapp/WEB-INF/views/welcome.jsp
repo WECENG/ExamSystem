@@ -8,6 +8,13 @@
     <title>Welcome</title>
 </head>
 <style>
+    body{
+        background:url(/img/bg.jpg);
+        width:100%;
+        height:100%;
+        background-size:50% 50%;
+        position:absolute;
+    }
     .wel{
         text-align: center;
         font-size:50px;
@@ -20,7 +27,7 @@
         border: 5px solid #DAA520;
     }
 </style>
-<body background="/img/background.jpg">
+<body>
     <div class="wel">
     <a href="${pageContext.request.contextPath}/examPool/register">注册</a><br>
     <a href="${pageContext.request.contextPath}/examPool/login">登录</a>

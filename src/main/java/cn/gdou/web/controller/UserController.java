@@ -8,6 +8,7 @@ import cn.gdou.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,16 +71,29 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String doLogin(Model model, Student student,
+    public String doLogin(RedirectAttributes model, Student student,
         HttpServletResponse response, HttpServletRequest request, HttpSession session){
         Student temp=service.findByAdmissionNum(student.getAdmissionNum());
-        if(temp==null){
-            model.addAttribute("mes","准考证号不存在。");
-            return "login";
+        /*加密密码*/
+        String md5Password=DigestUtils.md5DigestAsHex(student.getPassword().getBytes());
+        /*获取session中的验证码*/
+        String vcode = (String) session.getAttribute("code");
+        /*获取登录时的密码*/
+        String user_vcode = request.getParameter("vcode");
+
+        //判断验证码
+        if(vcode == null || !vcode.equals(user_vcode)){
+            //向request存入错误信息
+            model.addFlashAttribute("mes", "验证码错误");
+            //跳回login.jsp
+            return "redirect:/examPool/login";
+        }else if(temp==null){
+            model.addFlashAttribute("mes","准考证号不存在。");
+            return "redirect:/examPool/login";
         }else if(!student.getStuName().equals(temp.getStuName())||
-                 !student.getPassword().equals(temp.getPassword())){
-            model.addAttribute("mes","姓名或密码有误。");
-            return "login";
+                 !md5Password.equals(temp.getPassword())){
+            model.addFlashAttribute("mes","姓名或密码有误。");
+            return "redirect:/examPool/login";
         }else {
             model.addAttribute("mes","登陆成功!");
             try{
@@ -163,12 +177,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/password",method = RequestMethod.POST)
-    public String getPassword(Model model,Student student){
+    public String getPassword(RedirectAttributes model,Student student,HttpSession session){
         Student temp;
         if((temp=service.findByAdmissionNum(student.getAdmissionNum()))!=null){
             if(student.getIdentifyNum().equals(temp.getIdentifyNum())){
-                model.addAttribute("student",temp);
-                return "getPassword";
+                model.addFlashAttribute("student",temp);
+                session.setAttribute("student",temp);
+                return "update";
             }
         }
         model.addAttribute("mes","信息有误");

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Main Page</title>
@@ -83,10 +84,29 @@
         <tr>
             <td>
                 <label>{{$index+1}}、{{$value.title}}</label><br>
-                {{if $value.option1==""}} 正确{{/if}}<input type="radio" value="1" name="{{$index}}"/>{{$value.option1}}
-                {{if $value.option2==""}} 错误{{/if}}<input type="radio" value="2" name="{{$index}}"/>{{$value.option2}}
-                <input type="radio" {{if $value.option3==""}} hidden="hidden"{{/if}} value="3" name="{{$index}}"/>{{$value.option3}}
-                <input type="radio" {{if $value.option4==""}} hidden="hidden"{{/if}} value="4" name="{{$index}}"/>{{$value.option4}}
+
+                {{if $value.option1==""}} 正确{{/if}}
+                <label class="btn btn-primary">A
+                <input type="radio" value="1" name="{{$index}}"/></label>
+                {{$value.option1}}
+
+                {{if $value.option2==""}} 错误{{/if}}
+                <label class="btn btn-primary">B
+                <input type="radio" value="2" name="{{$index}}"/></label>
+                {{$value.option2}}
+
+                {{if $value.option3!=""}}
+                <label class="btn btn-primary">C
+                <input type="radio" value="3" name="{{$index}}"/>
+                </label>{{$value.option3}}
+                {{/if}}
+
+                {{if $value.option4!=""}}
+                <label class="btn btn-primary">D
+                <input type="radio" value="4" name="{{$index}}"/>
+                </label>{{$value.option4}}
+                {{/if}}
+
                 <br>{{if $value.picture!=""}}<img async src="{{$value.picture}}" name="图{{$index+1}}"/>{{/if}}<br>
             </td>
         </tr>
@@ -94,7 +114,7 @@
     {{/each}}
         <input type="hidden" name="type" id="type" value="{{$data.type}}"/>
         <input type="hidden" name="curPage" id="curPage" value="{{$data.curPage}}"/>
-        <input type="submit" name="submit" value="提交"/>
+        <input  class="btn btn-primary btn-lg" type="submit" name="submit" value="提交"/>
      </form>
 </script>
 
@@ -131,20 +151,13 @@
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" id="ulExam" role="menu" aria-labelledby="dropdownMenu1">
+            <c:forEach var="i" begin="1" end="10">
             <li role="presentation">
-                <button role="menuitem" id="exam1" tabindex="-1" onclick="getExam(0)">科目一试题1</button>
+                <button role="menuitem" id="exam1" tabindex="-1" onclick="getExam(${i-1})">科目一试题${i}</button>
             </li>
-            <li role="presentation">
-                <button role="menuitem" id="exam2" tabindex="-1" onclick="getExam(1)">科目一试题2</button>
-            </li>
-            <li role="presentation">
-                <button role="menuitem" id="exam3" tabindex="-1" onclick="getExam(2)">科目一试题3</button>
-            </li>
-            <li role="presentation">
-                <button role="menuitem" id="exam4" tabindex="-1" onclick="getExam(3)">科目一试题4</button>
-            </li>
+            </c:forEach>
         </ul>
-        <button type="button" onclick="updateExam(i++)" name="button">更新试题</button>
+        <button class="btn" type="button" onclick="updateExam(i++)" name="button">更新试题</button>
     </div>
     <div>
         <label style="font-size: 30px">考试时间40分钟</label><br><label style="font-size: 30px">共20道题</label>
