@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: ExamSystem
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: Administrator
+Implementation-Vendor-Id: DNS
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_162
+Main-Class: ${start-class}
+

@@ -1,0 +1,41 @@
+.hfor{
+     position: relative;
+     text-align: center;
+     }
+#nav ul {
+    position: relative;
+    Width:1000px;
+    height:40px;
+    margin:30px auto;
+    padding:0;
+    list-style:none;
+    border-top:solid 5px #DAA520;
+    border-bottom:solid 5px #DAA520;
+    background:url(/img/lgbg.png)
+}
+#nav ul li{
+    width:100px;
+    float:left;
+    text-align:center;
+    font:16px/2.5 "microsoft yahei";
+}
+#nav ul li a {
+    color:#800080; text-decoration:none;
+}
+#nav ul li a:hover {
+    display:block;  background:#DC143C;
+}
+#sidebar {
+    float:left;
+    width: 30%;
+    height: 100%;
+    border: 5px solid #DAA520;
+    margin-right: -100%;
+}
+#content1 {
+    float:right;
+    height: 100%;
+    width: 70%;
+    border: 5px solid #DAA520;
+    overflow: scroll;
+}
